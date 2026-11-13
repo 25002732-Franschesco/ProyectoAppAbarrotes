@@ -1,0 +1,9 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="azul_1">#3DB7FC</color>
+    <color name="azul_2">#349CD9</color>
+    <color name="azul_3">#2A7FB0</color>
+    <color name="azul_4">#206187</color>
+    <color name="azul_5">#17445E</color>
+</resources>
