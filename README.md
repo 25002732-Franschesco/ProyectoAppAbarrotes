@@ -1,2 +1,0 @@
-# ProyectoAppAbarrotes
-App de Kotlin
