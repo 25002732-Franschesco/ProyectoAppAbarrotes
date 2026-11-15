@@ -14,6 +14,7 @@ import org.utl.ldsm406_puntoventa.data.surtidor.Surtidor
 import org.utl.ldsm406_puntoventa.data.surtidor.SurtidorViewModel
 import org.utl.ldsm406_puntoventa.views.modulo_producto.ProductoFormView
 import org.utl.ldsm406_puntoventa.views.modeulo_surtidor.SurtidorFormView
+import org.utl.ldsm406_puntoventa.views.modulo_producto.ProductoCard
 
 @Composable
 fun ProductosYSurtidoresView(
@@ -23,15 +24,12 @@ fun ProductosYSurtidoresView(
     val productos by productoViewModel.productos.collectAsState()
     val surtidores by surtidorViewModel.listaSurtidores.collectAsState()
 
-    // Estados para controlar formularios de Productos
     var mostrarFormProducto by remember { mutableStateOf(false) }
     var productoEditar by remember { mutableStateOf<Producto?>(null) }
 
-    // Estados para controlar formularios de Surtidores
     var mostrarFormSurtidor by remember { mutableStateOf(false) }
     var surtidorEditar by remember { mutableStateOf<Surtidor?>(null) }
 
-    // Si se abre el formulario de producto
     if (mostrarFormProducto) {
         ProductoFormView(
             productoEditar = productoEditar,
@@ -46,9 +44,7 @@ fun ProductosYSurtidoresView(
                 productoEditar = null
             }
         )
-    }
-    // Si se abre el formulario de surtidor
-    else if (mostrarFormSurtidor) {
+    } else if (mostrarFormSurtidor) {
         SurtidorFormView(
             surtidorEditar = surtidorEditar,
             onGuardar = { surtidor ->
@@ -62,16 +58,14 @@ fun ProductosYSurtidoresView(
                 surtidorEditar = null
             }
         )
-    }
-    // Pantalla dividida a la mitad (Productos arriba/izq, Surtidores abajo/der)
-    else {
+    } else {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // --- SECCIÓN DE PRODUCTOS (Mitad superior) ---
+            // Mitad Superior: Productos
             Column(modifier = Modifier.weight(1f)) {
                 Text("Módulo de Productos", style = MaterialTheme.typography.titleMedium)
                 Button(
@@ -96,7 +90,7 @@ fun ProductosYSurtidoresView(
 
             Divider(modifier = Modifier.padding(vertical = 4.dp))
 
-            // --- SECCIÓN DE SURTIDORES (Mitad inferior) ---
+            // Mitad Inferior: Surtidores
             Column(modifier = Modifier.weight(1f)) {
                 Text("Módulo de Surtidores", style = MaterialTheme.typography.titleMedium)
                 Button(
