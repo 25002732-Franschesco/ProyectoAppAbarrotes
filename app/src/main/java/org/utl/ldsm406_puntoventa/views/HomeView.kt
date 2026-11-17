@@ -29,34 +29,24 @@ fun HomeView(){
     var selectedItem by remember { mutableStateOf(0) }
 
     Scaffold(
-        topBar =  {},
+        topBar = {},
         bottomBar = {
             BottonBar(
                 selectedItem = selectedItem,
-                onItemSelected = {
-                    selectedItem = it
-                }
+                onItemSelected = { selectedItem = it }
             )
-        },
-        floatingActionButton = {
-            Button(onClick = {}, modifier = Modifier.size(78.dp),
-                shape = CircleShape
-            ) {
-                Icon(imageVector = Icons.Default.Add,
-                    contentDescription = "Agregar")
-            }
         }
     ) { paddingValues ->
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
         ){
-
             when(selectedItem){
-                0 -> InicioView()               // Botón 0: Inicio
-                1 -> ProductosYSurtidoresView() // Botón 1: Registrar (Pantalla dividida 50/50)
-                2 -> ProductosView()           // Botón 2: Productos (Lista completa)
-                3 -> SurtidoresView()           // Botón 3: Surtidores (Lista completa)
+                0 -> InicioView()
+                1 -> ProductosYSurtidoresView()
+                2 -> ProductosView()
+                3 -> SurtidoresView()
             }
         }
 
