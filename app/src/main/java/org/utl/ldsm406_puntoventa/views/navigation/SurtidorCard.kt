@@ -13,8 +13,12 @@ import androidx.compose.ui.unit.dp
 import org.utl.ldsm406_puntoventa.data.surtidor.Surtidor
 
 @Composable
-fun SurtidorCard(surtidor: Surtidor) {
+fun SurtidorCard(
+    surtidor: Surtidor,
+    onClick: () -> Unit
+) {
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

@@ -65,7 +65,6 @@ fun ProductosYSurtidoresView(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Mitad Superior: Productos
             Column(modifier = Modifier.weight(1f)) {
                 Text("Módulo de Productos", style = MaterialTheme.typography.titleMedium)
                 Button(
@@ -83,14 +82,19 @@ fun ProductosYSurtidoresView(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(items = productos, key = { it.id }) { producto ->
-                        ProductoCard(producto = producto)
+                        ProductoCard(
+                            producto = producto,
+                            onClick = {
+                                productoEditar = producto
+                                mostrarFormProducto = true
+                            }
+                        )
                     }
                 }
             }
 
             Divider(modifier = Modifier.padding(vertical = 4.dp))
 
-            // Mitad Inferior: Surtidores
             Column(modifier = Modifier.weight(1f)) {
                 Text("Módulo de Surtidores", style = MaterialTheme.typography.titleMedium)
                 Button(
@@ -108,7 +112,13 @@ fun ProductosYSurtidoresView(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(items = surtidores, key = { it.id }) { surtidor ->
-                        SurtidorCard(surtidor = surtidor)
+                        SurtidorCard(
+                            surtidor = surtidor,
+                            onClick = {
+                                surtidorEditar = surtidor
+                                mostrarFormSurtidor = true
+                            }
+                        )
                     }
                 }
             }
