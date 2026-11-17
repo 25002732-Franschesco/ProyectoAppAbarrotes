@@ -1,5 +1,6 @@
 package org.utl.ldsm406_puntoventa.views.modulo_producto
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -7,7 +8,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.utl.ldsm406_puntoventa.R
 import org.utl.ldsm406_puntoventa.data.producto.Producto
 
 @Composable
@@ -26,13 +30,16 @@ fun ProductoFormView(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(colorResource(id = R.color.crema_1))
             .verticalScroll(rememberScrollState())
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
             text = if (productoEditar == null) "Registro de producto" else "Editar producto",
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.cafe_5)
         )
 
         OutlinedTextField(
@@ -80,6 +87,9 @@ fun ProductoFormView(
         ) {
             OutlinedButton(
                 onClick = onCancelar,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = colorResource(id = R.color.cafe_4)
+                ),
                 modifier = Modifier.weight(1f)
             ) {
                 Text("Cancelar")
@@ -110,6 +120,10 @@ fun ProductoFormView(
                         )
                     }
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.naranja_4),
+                    contentColor = colorResource(id = R.color.white)
+                ),
                 modifier = Modifier.weight(1f)
             ) {
                 Text(if (productoEditar == null) "Guardar" else "Actualizar")
