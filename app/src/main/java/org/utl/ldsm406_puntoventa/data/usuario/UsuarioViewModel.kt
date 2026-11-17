@@ -16,10 +16,17 @@ class UsuarioViewModel(
 
     private val repository = UsuarioRepository(dao)
 
-    fun guardar(usuario: Usuario, alGuardar: () -> Unit) {
+    fun guardar(usuario: Usuario, alGuardar: () -> Unit = {}) {
         viewModelScope.launch {
             repository.insertar(usuario)
             alGuardar()
+        }
+    }
+
+    fun validarLogin(usuario: String, pass: String, onResultado: (Usuario?) -> Unit) {
+        viewModelScope.launch {
+            val usuarioEncontrado = repository.iniciarSesion(usuario, pass)
+            onResultado(usuarioEncontrado)
         }
     }
 }

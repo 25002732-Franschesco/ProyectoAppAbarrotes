@@ -4,9 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,10 +32,8 @@ fun ProductosYSurtidoresView(
 ) {
     val productos by productoViewModel.productos.collectAsState()
     val surtidores by surtidorViewModel.listaSurtidores.collectAsState()
-
     var mostrarFormProducto by remember { mutableStateOf(false) }
     var productoEditar by remember { mutableStateOf<Producto?>(null) }
-
     var mostrarFormSurtidor by remember { mutableStateOf(false) }
     var surtidorEditar by remember { mutableStateOf<Surtidor?>(null) }
 
@@ -65,85 +69,168 @@ fun ProductosYSurtidoresView(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(id = R.color.crema_1))
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Módulo de Productos",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.cafe_5)
-                )
-                Button(
-                    onClick = {
-                        productoEditar = null
-                        mostrarFormProducto = true
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.naranja_4),
-                        contentColor = colorResource(id = R.color.white)
-                    ),
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                ) {
-                    Text("Agregar Producto")
-                }
-
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(items = productos, key = { it.id }) { producto ->
-                        ProductoCard(
-                            producto = producto,
-                            onClick = {
-                                productoEditar = producto
-                                mostrarFormProducto = true
-                            }
+                .background(
+                    brush = verticalGradient(
+                        colors = listOf(
+                            colorResource(id = R.color.crema_1),
+                            colorResource(id = R.color.crema_3)
                         )
+                    )
+                )
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = colorResource(id = R.color.naranja_4).copy(alpha = 0.15f),
+                    modifier = Modifier.size(44.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.PlaylistAdd,
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.naranja_4)
+                        )
+                    }
+                }
+                Column {
+                    Text(
+                        text = "Panel de Registros",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.cafe_5)
+                    )
+                    Text(
+                        text = "Administra tus altas de inventario y proveedores",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorResource(id = R.color.cafe_4)
+                    )
+                }
+            }
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.crema_2)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Productos (${productos.size})",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.cafe_5)
+                        )
+                        Button(
+                            onClick = {
+                                productoEditar = null
+                                mostrarFormProducto = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(id = R.color.naranja_4),
+                                contentColor = colorResource(id = R.color.crema_fondo)
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Agregar")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(items = productos, key = { it.id }) { producto ->
+                            ProductoCard(
+                                producto = producto,
+                                onClick = {
+                                    productoEditar = producto
+                                    mostrarFormProducto = true
+                                }
+                            )
+                        }
                     }
                 }
             }
 
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 4.dp),
-                color = colorResource(id = R.color.crema_3)
-            )
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Módulo de Surtidores",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.cafe_5)
-                )
-                Button(
-                    onClick = {
-                        surtidorEditar = null
-                        mostrarFormSurtidor = true
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.verde_4),
-                        contentColor = colorResource(id = R.color.white)
-                    ),
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.crema_2)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp)
                 ) {
-                    Text("Agregar Surtidor")
-                }
-
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(items = surtidores, key = { it.id }) { surtidor ->
-                        SurtidorCard(
-                            surtidor = surtidor,
-                            onClick = {
-                                surtidorEditar = surtidor
-                                mostrarFormSurtidor = true
-                            }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Surtidores (${surtidores.size})",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.cafe_5)
                         )
+                        Button(
+                            onClick = {
+                                surtidorEditar = null
+                                mostrarFormSurtidor = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(id = R.color.verde_4),
+                                contentColor = colorResource(id = R.color.crema_fondo)
+                            ),
+                            shape = RoundedCornerShape(8.dp),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Agregar")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(items = surtidores, key = { it.id }) { surtidor ->
+                            SurtidorCard(
+                                surtidor = surtidor,
+                                onClick = {
+                                    surtidorEditar = surtidor
+                                    mostrarFormSurtidor = true
+                                }
+                            )
+                        }
                     }
                 }
             }

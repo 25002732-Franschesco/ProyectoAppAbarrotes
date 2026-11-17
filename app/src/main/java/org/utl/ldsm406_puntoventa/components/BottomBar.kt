@@ -65,7 +65,7 @@ fun BottonBar(
                     Text(item.title)
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = colorResource(id = R.color.white),
+                    selectedIconColor = colorResource(id = R.color.crema_fondo),
                     selectedTextColor = colorResource(id = R.color.naranja_4),
                     indicatorColor = colorResource(id = R.color.naranja_3),
                     unselectedIconColor = colorResource(id = R.color.cafe_4),

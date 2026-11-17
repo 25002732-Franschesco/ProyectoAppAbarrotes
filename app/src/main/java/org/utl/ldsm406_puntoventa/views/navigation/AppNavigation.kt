@@ -19,9 +19,14 @@ fun AppNavegation(){
         startDestination = "Login"
     ){
         composable ( route = "Login" ){
+            val viewModel: UsuarioViewModel = viewModel()
+
             LogginView(
+                usuarioViewModel = viewModel,
                 onLoginSuccess = {
-                    navController.navigate(route = "Home")
+                    navController.navigate(route = "Home") {
+                        popUpTo("Login") { inclusive = true }
+                    }
                 },
                 onRegisterClick = {
                     navController.navigate(route = "FormRegister")
@@ -33,9 +38,9 @@ fun AppNavegation(){
 
             RegisterFormView(
                 onGuardar = { usuario ->
-                    viewModel.guardar(usuario) {
+                    viewModel.guardar(usuario, {
                         navController.popBackStack()
-                    }
+                    })
                 },
                 onCancelar = {
                     navController.popBackStack()

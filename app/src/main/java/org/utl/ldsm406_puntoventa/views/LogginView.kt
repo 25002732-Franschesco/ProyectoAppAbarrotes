@@ -17,17 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.utl.ldsm406_puntoventa.R
+import org.utl.ldsm406_puntoventa.data.usuario.UsuarioViewModel
 
 @Composable
 fun LogginView(
     onLoginSuccess: () -> Unit,
-    onRegisterClick: () -> Unit
+    onRegisterClick: () -> Unit,
+    usuarioViewModel: UsuarioViewModel = viewModel()
 ) {
     var username by remember { mutableStateOf("") }
-    val password = rememberTextFieldState()
+    val passwordState = rememberTextFieldState()
+    var errorMsg by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -63,13 +67,13 @@ fun LogginView(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Tienda de Abarrotes",
-            color = colorResource(R.color.white),
+            text = "Tiendita",
+            color = colorResource(R.color.crema_fondo),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Punto de Venta",
+            text = "Lleva un Registro",
             color = colorResource(R.color.crema_2),
             style = MaterialTheme.typography.titleMedium
         )
@@ -123,7 +127,7 @@ fun LogginView(
                 )
 
                 OutlinedSecureTextField(
-                    state = password,
+                    state = passwordState,
                     label = { Text("Contraseña") },
                     leadingIcon = {
                         Icon(
@@ -145,17 +149,39 @@ fun LogginView(
                     )
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                if (errorMsg.isNotBlank()) {
+                    Text(
+                        text = errorMsg,
+                        color = MaterialTheme.colorScheme.error,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 13.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Button(
-                    onClick = { onLoginSuccess() },
+                    onClick = {
+                        val passText = passwordState.text.toString()
+                        if (username.isBlank() || passText.isBlank()) {
+                            errorMsg = "Llena todos los campos"
+                        } else {
+                            usuarioViewModel.validarLogin(username.trim(), passText.trim()) { usuarioEncontrado ->
+                                if (usuarioEncontrado != null) {
+                                    onLoginSuccess()
+                                } else {
+                                    errorMsg = "Usuario o contraseña incorrectos"
+                                }
+                            }
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(R.color.naranja_4),
-                        contentColor = colorResource(R.color.white)
+                        contentColor = colorResource(R.color.crema_fondo)
                     )
                 ) {
                     Text(
@@ -185,10 +211,4 @@ fun LogginView(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewLogginView() {
-    LogginView({}, onRegisterClick = {})
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +28,14 @@ fun InicioView(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.crema_1))
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(id = R.color.crema_1),
+                        colorResource(id = R.color.crema_3)
+                    )
+                )
+            )
             .verticalScroll(rememberScrollState())
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -46,14 +54,14 @@ fun InicioView(
                     .padding(24.dp)
             ) {
                 Text(
-                    text = "¡Bienvenido de nuevo!",
+                    text = "¡Bienvenido Crack!",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.white)
+                    color = colorResource(id = R.color.crema_fondo)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Sistema de Punto de Venta - Tienda de Abarrotes",
+                    text = "Tienda de Abarrotes",
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorResource(id = R.color.crema_2)
                 )
