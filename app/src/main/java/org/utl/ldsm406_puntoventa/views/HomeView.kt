@@ -18,7 +18,9 @@ import org.utl.ldsm406_puntoventa.views.navigation.ProductosYSurtidoresView
 import org.utl.ldsm406_puntoventa.views.navigation.SurtidoresView
 
 @Composable
-fun HomeView(){
+fun HomeView(
+    onCerrarSesion: () -> Unit // <-- Recibe la acción de cerrar sesión
+){
     var selectedItem by remember { mutableStateOf(0) }
 
     Scaffold(
@@ -26,7 +28,10 @@ fun HomeView(){
         bottomBar = {
             BottonBar(
                 selectedItem = selectedItem,
-                onItemSelected = { selectedItem = it }
+                onItemSelected = { index ->
+                    selectedItem = index
+                },
+                onCerrarSesion = onCerrarSesion
             )
         }
     ) { paddingValues ->
@@ -42,13 +47,11 @@ fun HomeView(){
                 3 -> SurtidoresView()
             }
         }
-
-
     }
 }
 
 @Composable
 @Preview
 fun PreviewHomeView(){
-    HomeView()
+    HomeView(onCerrarSesion = {})
 }

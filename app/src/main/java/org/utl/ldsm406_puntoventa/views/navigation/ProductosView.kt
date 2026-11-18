@@ -31,6 +31,12 @@ fun ProductosView(productoViewModel: ProductoViewModel = viewModel()) {
             onGuardar = { productoActualizado ->
                 productoViewModel.guardar(productoActualizado) { productoEditar = null }
             },
+            onEliminar = {
+                productoEditar?.let { prod ->
+                    productoViewModel.eliminar(prod)
+                    productoEditar = null
+                }
+            },
             onCancelar = { productoEditar = null }
         )
     } else {
@@ -82,7 +88,10 @@ fun ProductosView(productoViewModel: ProductoViewModel = viewModel()) {
                 items(productos, key = { it.id }) { producto ->
                     ProductoCard(
                         producto = producto,
-                        onClick = { productoEditar = producto }
+                        onClick = { productoEditar = producto },
+                        onDelete = {
+                            productoViewModel.eliminar(producto)
+                        }
                     )
                 }
             }

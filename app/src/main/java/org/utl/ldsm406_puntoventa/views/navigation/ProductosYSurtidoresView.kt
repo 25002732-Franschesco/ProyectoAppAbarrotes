@@ -46,6 +46,13 @@ fun ProductosYSurtidoresView(
                     productoEditar = null
                 }
             },
+            onEliminar = {
+                productoEditar?.let { prod ->
+                    productoViewModel.eliminar(prod)
+                    mostrarFormProducto = false
+                    productoEditar = null
+                }
+            },
             onCancelar = {
                 mostrarFormProducto = false
                 productoEditar = null
@@ -56,6 +63,13 @@ fun ProductosYSurtidoresView(
             surtidorEditar = surtidorEditar,
             onGuardar = { surtidor ->
                 surtidorViewModel.guardar(surtidor) {
+                    mostrarFormSurtidor = false
+                    surtidorEditar = null
+                }
+            },
+            onEliminar = {
+                surtidorEditar?.let { surt ->
+                    surtidorViewModel.eliminar(surt)
                     mostrarFormSurtidor = false
                     surtidorEditar = null
                 }
@@ -167,6 +181,9 @@ fun ProductosYSurtidoresView(
                                 onClick = {
                                     productoEditar = producto
                                     mostrarFormProducto = true
+                                },
+                                onDelete = {
+                                    productoViewModel.eliminar(producto)
                                 }
                             )
                         }
@@ -228,6 +245,9 @@ fun ProductosYSurtidoresView(
                                 onClick = {
                                     surtidorEditar = surtidor
                                     mostrarFormSurtidor = true
+                                },
+                                onDelete = {
+                                    surtidorViewModel.eliminar(surtidor)
                                 }
                             )
                         }

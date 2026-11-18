@@ -6,12 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Business
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.LocalShipping
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,6 +22,7 @@ import org.utl.ldsm406_puntoventa.data.surtidor.Surtidor
 fun SurtidorFormView(
     surtidorEditar: Surtidor? = null,
     onGuardar: (Surtidor) -> Unit,
+    onEliminar: () -> Unit = {},
     onCancelar: () -> Unit
 ){
     var nombre by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.nombre ?: "") }
@@ -44,36 +40,53 @@ fun SurtidorFormView(
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
-        // Cabecera con ícono
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = colorResource(id = R.color.verde_4).copy(alpha = 0.15f),
-                modifier = Modifier.size(44.dp)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        imageVector = Icons.Default.LocalShipping,
-                        contentDescription = null,
-                        tint = colorResource(id = R.color.verde_4)
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = colorResource(id = R.color.verde_4).copy(alpha = 0.15f),
+                    modifier = Modifier.size(44.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.LocalShipping,
+                            contentDescription = null,
+                            tint = colorResource(id = R.color.verde_4)
+                        )
+                    }
+                }
+                Column {
+                    Text(
+                        text = if (surtidorEditar == null) "Nuevo Surtidor" else "Editar Surtidor",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.cafe_5)
+                    )
+                    Text(
+                        text = "Completa los datos del proveedor",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorResource(id = R.color.cafe_4)
                     )
                 }
             }
-            Column {
-                Text(
-                    text = if (surtidorEditar == null) "Nuevo Surtidor" else "Editar Surtidor",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.cafe_5)
-                )
-                Text(
-                    text = "Completa los datos del proveedor",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colorResource(id = R.color.cafe_4)
+
+            IconButton(
+                onClick = onCancelar,
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(colorResource(id = R.color.crema_3).copy(alpha = 0.5f), shape = RoundedCornerShape(10.dp))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Cancelar",
+                    tint = colorResource(id = R.color.cafe_5)
                 )
             }
         }
@@ -85,18 +98,14 @@ fun SurtidorFormView(
             onValueChange = { nombre = it },
             label = { Text("Nombre") },
             singleLine = true,
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Business, contentDescription = null, tint = colorResource(R.color.verde_4))
-            },
+            leadingIcon = { Icon(imageVector = Icons.Default.Business, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = colorResource(R.color.verde_4),
                 unfocusedBorderColor = colorResource(R.color.crema_3),
                 focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4),
-                focusedTextColor = colorResource(R.color.cafe_5),
-                unfocusedTextColor = colorResource(R.color.cafe_5)
+                unfocusedLabelColor = colorResource(R.color.cafe_4)
             )
         )
 
@@ -104,18 +113,14 @@ fun SurtidorFormView(
             value = descripcion,
             onValueChange = { descripcion = it },
             label = { Text("Descripción") },
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Description, contentDescription = null, tint = colorResource(R.color.verde_4))
-            },
+            leadingIcon = { Icon(imageVector = Icons.Default.Description, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = colorResource(R.color.verde_4),
                 unfocusedBorderColor = colorResource(R.color.crema_3),
                 focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4),
-                focusedTextColor = colorResource(R.color.cafe_5),
-                unfocusedTextColor = colorResource(R.color.cafe_5)
+                unfocusedLabelColor = colorResource(R.color.cafe_4)
             )
         )
 
@@ -124,18 +129,14 @@ fun SurtidorFormView(
             onValueChange = { ubicacion = it },
             label = { Text("Ubicación") },
             singleLine = true,
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.LocationOn, contentDescription = null, tint = colorResource(R.color.verde_4))
-            },
+            leadingIcon = { Icon(imageVector = Icons.Default.LocationOn, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = colorResource(R.color.verde_4),
                 unfocusedBorderColor = colorResource(R.color.crema_3),
                 focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4),
-                focusedTextColor = colorResource(R.color.cafe_5),
-                unfocusedTextColor = colorResource(R.color.cafe_5)
+                unfocusedLabelColor = colorResource(R.color.cafe_4)
             )
         )
 
@@ -144,18 +145,14 @@ fun SurtidorFormView(
             onValueChange = { numerotelefonico = it },
             label = { Text("Número Telefónico") },
             singleLine = true,
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Phone, contentDescription = null, tint = colorResource(R.color.verde_4))
-            },
+            leadingIcon = { Icon(imageVector = Icons.Default.Phone, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = colorResource(R.color.verde_4),
                 unfocusedBorderColor = colorResource(R.color.crema_3),
                 focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4),
-                focusedTextColor = colorResource(R.color.cafe_5),
-                unfocusedTextColor = colorResource(R.color.cafe_5)
+                unfocusedLabelColor = colorResource(R.color.cafe_4)
             )
         )
 
@@ -164,42 +161,43 @@ fun SurtidorFormView(
             onValueChange = { categoria = it },
             label = { Text("Categoría") },
             singleLine = true,
-            leadingIcon = {
-                Icon(imageVector = Icons.Default.Category, contentDescription = null, tint = colorResource(R.color.verde_4))
-            },
+            leadingIcon = { Icon(imageVector = Icons.Default.Category, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = colorResource(R.color.verde_4),
                 unfocusedBorderColor = colorResource(R.color.crema_3),
                 focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4),
-                focusedTextColor = colorResource(R.color.cafe_5),
-                unfocusedTextColor = colorResource(R.color.cafe_5)
+                unfocusedLabelColor = colorResource(R.color.cafe_4)
             )
         )
 
         if (error.isNotBlank()){
-            Text(text = error, color = MaterialTheme.colorScheme.error)
+            Text(text = error, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold)
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            OutlinedButton(
-                onClick = onCancelar,
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = colorResource(id = R.color.cafe_4)
-                ),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(48.dp)
-            ) {
-                Text("Cancelar")
+            if (surtidorEditar != null) {
+                Button(
+                    onClick = onEliminar,
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = colorResource(id = R.color.crema_fondo)
+                    ),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Eliminar")
+                }
             }
 
             Button(
@@ -234,7 +232,7 @@ fun SurtidorFormView(
                     .weight(1f)
                     .height(48.dp)
             ) {
-                Text(if (surtidorEditar == null) "Guardar" else "Actualizar")
+                Text(if (surtidorEditar == null) "Guardar" else "Actualizar", fontWeight = FontWeight.Bold)
             }
         }
     }

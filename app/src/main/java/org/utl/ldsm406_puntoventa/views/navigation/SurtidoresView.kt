@@ -33,6 +33,12 @@ fun SurtidoresView(surtidorViewModel: SurtidorViewModel = viewModel()) {
                     surtidorEditar = null
                 }
             },
+            onEliminar = {
+                surtidorEditar?.let { surt ->
+                    surtidorViewModel.eliminar(surt)
+                    surtidorEditar = null
+                }
+            },
             onCancelar = {
                 surtidorEditar = null
             }
@@ -88,6 +94,9 @@ fun SurtidoresView(surtidorViewModel: SurtidorViewModel = viewModel()) {
                         surtidor = surtidor,
                         onClick = {
                             surtidorEditar = surtidor
+                        },
+                        onDelete = {
+                            surtidorViewModel.eliminar(surtidor)
                         }
                     )
                 }
