@@ -7,14 +7,14 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/outline_add_shopping_cart_24"
-        android:label="Tienda de Abarrotes"
+        android:label="@string/app_name"
         android:roundIcon="@drawable/outline_add_shopping_cart_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.LDSM406_PuntoVenta">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Tienda de Abarrotes"
+            android:label="@string/app_name"
             android:theme="@style/Theme.LDSM406_PuntoVenta"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
