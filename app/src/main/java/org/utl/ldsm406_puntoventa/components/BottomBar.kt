@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import org.utl.ldsm406_puntoventa.R
 
 data class BottomItem(
-    val title: String,
+    val title: Int,
     val icon: ImageVector
 )
 
@@ -43,23 +44,23 @@ fun BottonBar(
 ){
     val items = listOf(
         BottomItem(
-            "Inicio",
+            R.string.nav_home,
             Icons.Default.Home
         ),
         BottomItem(
-            "Registrar",
+            R.string.nav_register,
             Icons.Default.AppRegistration
         ),
         BottomItem(
-            "Productos",
+            R.string.nav_products,
             Icons.Default.ShoppingCart
         ),
         BottomItem(
-            "Surtidores",
+            R.string.nav_suppliers,
             Icons.Default.Factory
         ),
         BottomItem(
-            "Salir",
+            R.string.nav_exit,
             Icons.AutoMirrored.Filled.ExitToApp
         )
     )
@@ -84,7 +85,7 @@ fun BottonBar(
             items.forEachIndexed { index, item ->
                 val isSalir = index == items.size - 1
                 val isSelected = selectedItem == index
-
+                val title = stringResource(item.title)
                 NavigationBarItem(
                     selected = isSelected,
                     onClick = {
@@ -97,7 +98,7 @@ fun BottonBar(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.title,
+                            contentDescription = title,
                             modifier = Modifier.size(22.dp)
                         )
                     },
@@ -108,7 +109,7 @@ fun BottonBar(
                             exit = fadeOut() + slideOutHorizontally(targetOffsetX = { -it })
                         ) {
                             Text(
-                                text = item.title,
+                                text = title,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )

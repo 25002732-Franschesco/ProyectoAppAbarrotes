@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Grocery Store</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_register">Register</string>
+    <string name="nav_products">Products</string>
+    <string name="nav_suppliers">Surtidores</string>
+    <string name="nav_exit">Salir</string>
 </resources>
