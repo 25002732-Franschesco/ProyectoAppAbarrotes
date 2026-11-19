@@ -152,7 +152,7 @@ fun InicioView(
                 titulo = "Catálogo de Productos",
                 descripcion = "Consulta precios, stock y gestiona artículos",
                 icono = Icons.Default.ShoppingCart,
-                accentColor = colorResource(id = R.color.naranja_4), // Naranja
+                accentColor = colorResource(id = R.color.naranja_4),
                 onClick = { onItemSelected(2) }
             )
 
@@ -160,7 +160,7 @@ fun InicioView(
                 titulo = "Catálogo de Surtidores",
                 descripcion = "Administra proveedores y contactos",
                 icono = Icons.Default.Factory,
-                accentColor = colorResource(id = R.color.verde_4), // Verde
+                accentColor = colorResource(id = R.color.verde_4),
                 onClick = { onItemSelected(3) }
             )
 
@@ -168,7 +168,7 @@ fun InicioView(
                 titulo = "Panel de Registros",
                 descripcion = "Altas rápidas de inventario y surtidores",
                 icono = Icons.Default.AppRegistration,
-                accentColor = Color(0xFF3B82F6), // Azul moderno
+                accentColor = Color(0xFF3B82F6),
                 onClick = { onItemSelected(1) }
             )
 
@@ -176,7 +176,7 @@ fun InicioView(
                 titulo = "Cerrar Sesión",
                 descripcion = "Salir de tu cuenta actual de forma segura",
                 icono = Icons.AutoMirrored.Filled.ExitToApp,
-                accentColor = Color(0xFFD97706), // Ámbar / Mostaza
+                accentColor = Color(0xFFD97706),
                 onClick = onCerrarSesion
             )
         }
