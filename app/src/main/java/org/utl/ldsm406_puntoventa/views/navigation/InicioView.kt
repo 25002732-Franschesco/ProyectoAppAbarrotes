@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -99,7 +100,7 @@ fun InicioView(
                             modifier = Modifier.size(16.dp)
                         )
                         Text(
-                            text = "TIENDA LILI",
+                            text = stringResource(R.string.home_title),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 1.sp,
@@ -109,7 +110,7 @@ fun InicioView(
                 }
 
                 Text(
-                    text = "¡Bienvenido Crack!",
+                    text = stringResource(R.string.home_welcome),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.ExtraBold,
                     letterSpacing = (-0.5).sp,
@@ -117,7 +118,7 @@ fun InicioView(
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Gestiona tu tiendita muy rápido y sencillo.",
+                    text = stringResource(R.string.home_subtitle),
                     fontSize = 14.sp,
                     lineHeight = 20.sp,
                     color = Color.White.copy(alpha = 0.9f)
@@ -134,14 +135,14 @@ fun InicioView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Accesos Rápidos",
+                    text = stringResource(R.string.home_quick_access),
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Bold,
                     letterSpacing = (-0.3).sp,
                     color = colorResource(id = R.color.cafe_5)
                 )
                 Text(
-                    text = "4 Opciones",
+                    text = stringResource(R.string.home_options),
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     color = colorResource(id = R.color.cafe_4)
@@ -149,32 +150,32 @@ fun InicioView(
             }
 
             MenuCard(
-                titulo = "Catálogo de Productos",
-                descripcion = "Consulta precios, stock y gestiona artículos",
+                titulo = stringResource(R.string.home_card_products_title),
+                descripcion = stringResource(R.string.home_card_products_desc),
                 icono = Icons.Default.ShoppingCart,
                 accentColor = colorResource(id = R.color.naranja_4),
                 onClick = { onItemSelected(2) }
             )
 
             MenuCard(
-                titulo = "Catálogo de Surtidores",
-                descripcion = "Administra proveedores y contactos",
+                titulo = stringResource(R.string.home_card_suppliers_title),
+                descripcion = stringResource(R.string.home_card_suppliers_desc),
                 icono = Icons.Default.Factory,
                 accentColor = colorResource(id = R.color.verde_4),
                 onClick = { onItemSelected(3) }
             )
 
             MenuCard(
-                titulo = "Panel de Registros",
-                descripcion = "Altas rápidas de inventario y surtidores",
+                titulo = stringResource(R.string.home_card_register_title),
+                descripcion = stringResource(R.string.home_card_register_desc),
                 icono = Icons.Default.AppRegistration,
                 accentColor = Color(0xFF3B82F6),
                 onClick = { onItemSelected(1) }
             )
 
             MenuCard(
-                titulo = "Cerrar Sesión",
-                descripcion = "Salir de tu cuenta actual de forma segura",
+                titulo = stringResource(R.string.home_card_logout_title),
+                descripcion = stringResource(R.string.home_card_logout_desc),
                 icono = Icons.AutoMirrored.Filled.ExitToApp,
                 accentColor = Color(0xFFD97706),
                 onClick = onCerrarSesion

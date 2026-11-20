@@ -3,6 +3,20 @@
     <string name="nav_home">Inicio</string>
     <string name="nav_register">Registrar</string>
     <string name="nav_products">Productos</string>
-    <string name="nav_suppliers">Suppliers</string>
-    <string name="nav_exit">Exit</string>
+    <string name="nav_suppliers">Surtidores</string>
+    <string name="nav_exit">Salir</string>
+    
+    <string name="home_title">TIENDA LILI</string>
+    <string name="home_welcome">¡Bienvenido Crack!</string>
+    <string name="home_subtitle">Gestiona tu tiendita muy rápido y sencillo.</string>
+    <string name="home_quick_access">Accesos Rápidos</string>
+    <string name="home_options">4 Opciones</string>
+    <string name="home_card_products_title">Catálogo de Productos</string>
+    <string name="home_card_products_desc">Consulta precios, stock y gestiona artículos</string>
+    <string name="home_card_suppliers_title">Catálogo de Surtidores</string>
+    <string name="home_card_suppliers_desc">Administra proveedores y contactos</string>
+    <string name="home_card_register_title">Panel de Registros</string>
+    <string name="home_card_register_desc">Altas rápidas de inventario y surtidores</string>
+    <string name="home_card_logout_title">Cerrar Sesión</string>
+    <string name="home_card_logout_desc">Salir de tu cuenta actual de forma segura</string>
 </resources>

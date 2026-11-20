@@ -4,6 +4,20 @@
     <string name="nav_home">Home</string>
     <string name="nav_register">Register</string>
     <string name="nav_products">Products</string>
-    <string name="nav_suppliers">Surtidores</string>
-    <string name="nav_exit">Salir</string>
+    <string name="nav_suppliers">Suppliers</string>
+    <string name="nav_exit">Exit</string>
+
+    <string name="home_title">LILI STORE</string>
+    <string name="home_welcome">Welcome Crack!</string>
+    <string name="home_subtitle">Manage your store quickly and easily.</string>
+    <string name="home_quick_access">Quick Access</string>
+    <string name="home_options">4 Options</string>
+    <string name="home_card_products_title">Product Catalog</string>
+    <string name="home_card_products_desc">Check prices, stock, and manage items</string>
+    <string name="home_card_suppliers_title">Suppliers Catalog</string>
+    <string name="home_card_suppliers_desc">Manage suppliers and contacts</string>
+    <string name="home_card_register_title">Registration Panel</string>
+    <string name="home_card_register_desc">Quickly add inventory and suppliers</string>
+    <string name="home_card_logout_title">Log Out</string>
+    <string name="home_card_logout_desc">Safely sign out of your current account</string>
 </resources>
