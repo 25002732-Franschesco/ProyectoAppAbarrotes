@@ -20,4 +20,9 @@
     <string name="home_card_register_desc">Quickly add inventory and suppliers</string>
     <string name="home_card_logout_title">Log Out</string>
     <string name="home_card_logout_desc">Safely sign out of your current account</string>
+
+    <string name="product_category_label">Category: %1$s</string>
+    <string name="product_price_stock_label">Price: $%1$s | Stock: %2$s</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
 </resources>

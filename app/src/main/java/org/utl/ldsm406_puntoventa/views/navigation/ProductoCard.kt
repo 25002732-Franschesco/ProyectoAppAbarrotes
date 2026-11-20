@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.utl.ldsm406_puntoventa.R
@@ -48,12 +49,13 @@ fun ProductoCard(
                     color = colorResource(id = R.color.cafe_5)
                 )
                 Text(
-                    text = "Categoría: ${producto.categoria}",
+                    text = stringResource(id = R.string.product_category_label, producto.categoria),
                     style = MaterialTheme.typography.bodySmall,
                     color = colorResource(id = R.color.cafe_4)
                 )
                 Text(
-                    text = "Precio: $${producto.precio} | Stock: ${producto.existencia}",
+                    text = stringResource(
+                        id = R.string.product_price_stock_label,producto.precio.toString(),producto.existencia.toString()),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.verde_4)
@@ -72,7 +74,7 @@ fun ProductoCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
-                        contentDescription = "Modificar",
+                        contentDescription = stringResource(id = R.string.action_edit),
                         tint = colorResource(id = R.color.naranja_4),
                         modifier = Modifier.size(20.dp)
                     )
@@ -84,7 +86,7 @@ fun ProductoCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Eliminar",
+                        contentDescription = stringResource(id = R.string.action_delete),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier.size(20.dp)
                     )

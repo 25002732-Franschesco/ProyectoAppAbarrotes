@@ -19,4 +19,9 @@
     <string name="home_card_register_desc">Altas rápidas de inventario y surtidores</string>
     <string name="home_card_logout_title">Cerrar Sesión</string>
     <string name="home_card_logout_desc">Salir de tu cuenta actual de forma segura</string>
+
+    <string name="product_category_label">Categoría: %1$s</string>
+    <string name="product_price_stock_label">Precio: $%1$s | Stock: %2$s</string>
+    <string name="action_edit">Modificar</string>
+    <string name="action_delete">Eliminar</string>
 </resources>
