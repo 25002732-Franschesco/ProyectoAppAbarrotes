@@ -19,7 +19,7 @@ import org.utl.ldsm406_puntoventa.views.navigation.SurtidoresView
 
 @Composable
 fun HomeView(
-    onCerrarSesion: () -> Unit // <-- Recibe la acción de cerrar sesión
+    onCerrarSesion: () -> Unit
 ){
     var selectedItem by remember { mutableStateOf(0) }
 
@@ -41,7 +41,8 @@ fun HomeView(
                 .padding(paddingValues)
         ){
             when (selectedItem) {
-                0 -> InicioView(onItemSelected = { nuevoIndice -> selectedItem = nuevoIndice })
+                0 -> InicioView(
+                    onItemSelected = { nuevoIndice -> selectedItem = nuevoIndice }, onCerrarSesion = onCerrarSesion)
                 1 -> ProductosYSurtidoresView()
                 2 -> ProductosView()
                 3 -> SurtidoresView()
