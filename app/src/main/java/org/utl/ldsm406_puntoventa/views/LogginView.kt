@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,7 +32,7 @@ fun LogginView(
 ) {
     var username by remember { mutableStateOf("") }
     val passwordState = rememberTextFieldState()
-    var errorMsg by remember { mutableStateOf("") }
+    var errorResId by remember { mutableStateOf<Int?>(null) }
 
     Column(
         modifier = Modifier
@@ -57,7 +58,7 @@ fun LogginView(
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                     imageVector = Icons.Default.Storefront,
-                    contentDescription = "Logo Tienda",
+                    contentDescription = stringResource(R.string.login_logo_desc),
                     tint = colorResource(R.color.naranja_4),
                     modifier = Modifier.size(44.dp)
                 )
@@ -67,13 +68,13 @@ fun LogginView(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Tiendita",
+            text = stringResource(R.string.login_brand_title),
             color = colorResource(R.color.crema_fondo),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Lleva un Registro",
+            text = stringResource(R.string.login_brand_subtitle),
             color = colorResource(R.color.crema_2),
             style = MaterialTheme.typography.titleMedium
         )
@@ -95,7 +96,7 @@ fun LogginView(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = "Iniciar Sesión",
+                    text = stringResource(R.string.login_card_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.cafe_5)
@@ -104,7 +105,7 @@ fun LogginView(
                 OutlinedTextField(
                     value = username,
                     onValueChange = { username = it },
-                    label = { Text("Usuario") },
+                    label = { Text(stringResource(R.string.field_username)) },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -128,7 +129,7 @@ fun LogginView(
 
                 OutlinedSecureTextField(
                     state = passwordState,
-                    label = { Text("Contraseña") },
+                    label = { Text(stringResource(R.string.field_password)) },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Lock,
@@ -149,9 +150,9 @@ fun LogginView(
                     )
                 )
 
-                if (errorMsg.isNotBlank()) {
+                errorResId?.let { resId ->
                     Text(
-                        text = errorMsg,
+                        text = stringResource(id = resId),
                         color = MaterialTheme.colorScheme.error,
                         fontWeight = FontWeight.Bold,
                         fontSize = 13.sp
@@ -164,13 +165,13 @@ fun LogginView(
                     onClick = {
                         val passText = passwordState.text.toString()
                         if (username.isBlank() || passText.isBlank()) {
-                            errorMsg = "Llena todos los campos"
+                            errorResId = R.string.error_fill_all_fields
                         } else {
                             usuarioViewModel.validarLogin(username.trim(), passText.trim()) { usuarioEncontrado ->
                                 if (usuarioEncontrado != null) {
                                     onLoginSuccess()
                                 } else {
-                                    errorMsg = "Usuario o contraseña incorrectos"
+                                    errorResId = R.string.error_invalid_credentials
                                 }
                             }
                         }
@@ -185,7 +186,7 @@ fun LogginView(
                     )
                 ) {
                     Text(
-                        text = "Ingresar",
+                        text = stringResource(R.string.action_sign_in),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -203,7 +204,7 @@ fun LogginView(
                     )
                 ) {
                     Text(
-                        text = "Crear cuenta nueva",
+                        text = stringResource(R.string.action_create_account),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )

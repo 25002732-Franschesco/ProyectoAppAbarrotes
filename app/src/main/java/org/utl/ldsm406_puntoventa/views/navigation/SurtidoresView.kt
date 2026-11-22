@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -70,13 +71,13 @@ fun SurtidoresView(surtidorViewModel: SurtidorViewModel = viewModel()) {
                 }
                 Column {
                     Text(
-                        text = "Surtidores",
+                        text = stringResource(id = R.string.suppliers_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.cafe_5)
                     )
                     Text(
-                        text = "${surtidores.size} proveedores registrados",
+                        text = stringResource(id = R.string.suppliers_registered_count, surtidores.size),
                         style = MaterialTheme.typography.bodySmall,
                         color = colorResource(id = R.color.cafe_4)
                     )

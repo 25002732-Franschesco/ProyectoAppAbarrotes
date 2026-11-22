@@ -34,4 +34,21 @@
     <string name="products_section_count">Products (%1$d)</string>
     <string name="suppliers_section_count">Suppliers (%1$d)</string>
     <string name="action_add">Add</string>
+
+    <string name="supplier_location_label">Location: %1$s</string>
+    <string name="supplier_phone_label">Phone: %1$s</string>
+
+    <string name="suppliers_title">Suppliers</string>
+    <string name="suppliers_registered_count">%1$d suppliers registered</string>
+
+    <string name="login_logo_desc">Store Logo</string>
+    <string name="login_brand_title">Little Store</string>
+    <string name="login_brand_subtitle">Keep a Record</string>
+    <string name="login_card_title">Sign In</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="error_fill_all_fields">Please fill in all fields</string>
+    <string name="error_invalid_credentials">Incorrect username or password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="action_create_account">Create new account</string>
 </resources>

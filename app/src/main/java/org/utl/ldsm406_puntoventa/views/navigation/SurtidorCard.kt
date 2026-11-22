@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.utl.ldsm406_puntoventa.R
@@ -48,12 +49,12 @@ fun SurtidorCard(
                     color = colorResource(id = R.color.cafe_5)
                 )
                 Text(
-                    text = "Ubicación: ${surtidor.ubicacion}",
+                    text = stringResource(id = R.string.supplier_location_label, surtidor.ubicacion),
                     style = MaterialTheme.typography.bodyMedium,
                     color = colorResource(id = R.color.cafe_4)
                 )
                 Text(
-                    text = "Tel: ${surtidor.numerotelefonico}",
+                    text = stringResource(id = R.string.supplier_phone_label, surtidor.numerotelefonico),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Medium,
                     color = colorResource(id = R.color.naranja_4)
@@ -73,7 +74,7 @@ fun SurtidorCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
-                        contentDescription = "Modificar",
+                        contentDescription = stringResource(id = R.string.action_edit),
                         tint = colorResource(id = R.color.verde_4),
                         modifier = Modifier.size(20.dp)
                     )
@@ -85,7 +86,7 @@ fun SurtidorCard(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Eliminar",
+                        contentDescription = stringResource(id = R.string.action_delete),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier.size(20.dp)
                     )

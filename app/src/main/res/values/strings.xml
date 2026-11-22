@@ -33,4 +33,21 @@
     <string name="products_section_count">Productos (%1$d)</string>
     <string name="suppliers_section_count">Surtidores (%1$d)</string>
     <string name="action_add">Agregar</string>
+
+    <string name="supplier_location_label">Ubicación: %1$s</string>
+    <string name="supplier_phone_label">Tel: %1$s</string>
+
+    <string name="suppliers_title">Surtidores</string>
+    <string name="suppliers_registered_count">%1$d proveedores registrados</string>
+
+    <string name="login_logo_desc">Logo Tienda</string>
+    <string name="login_brand_title">Tiendita</string>
+    <string name="login_brand_subtitle">Lleva un Registro</string>
+    <string name="login_card_title">Iniciar Sesión</string>
+    <string name="field_username">Usuario</string>
+    <string name="field_password">Contraseña</string>
+    <string name="error_fill_all_fields">Llena todos los campos</string>
+    <string name="error_invalid_credentials">Usuario o contraseña incorrectos</string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="action_create_account">Crear cuenta nueva</string>
 </resources>
