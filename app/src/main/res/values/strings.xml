@@ -24,4 +24,13 @@
     <string name="product_price_stock_label">Precio: $%1$s | Stock: %2$s</string>
     <string name="action_edit">Modificar</string>
     <string name="action_delete">Eliminar</string>
+
+    <string name="products_title">Productos</string>
+    <string name="products_registered_count">%1$d artículos registrados</string>
+
+    <string name="register_panel_title">Panel de Registros</string>
+    <string name="register_panel_subtitle">Administra tus altas de inventario y proveedores</string>
+    <string name="products_section_count">Productos (%1$d)</string>
+    <string name="suppliers_section_count">Surtidores (%1$d)</string>
+    <string name="action_add">Agregar</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -114,13 +115,13 @@ fun ProductosYSurtidoresView(
                 }
                 Column {
                     Text(
-                        text = "Panel de Registros",
+                        text = stringResource(id = R.string.register_panel_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.cafe_5)
                     )
                     Text(
-                        text = "Administra tus altas de inventario y proveedores",
+                        text = stringResource(id = R.string.register_panel_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = colorResource(id = R.color.cafe_4)
                     )
@@ -146,7 +147,7 @@ fun ProductosYSurtidoresView(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Productos (${productos.size})",
+                            text = stringResource(id = R.string.products_section_count, productos.size),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = colorResource(id = R.color.cafe_5)
@@ -165,7 +166,7 @@ fun ProductosYSurtidoresView(
                         ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Agregar")
+                            Text(text = stringResource(id = R.string.action_add))
                         }
                     }
 
@@ -210,7 +211,7 @@ fun ProductosYSurtidoresView(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Surtidores (${surtidores.size})",
+                            text = stringResource(id = R.string.suppliers_section_count, surtidores.size),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = colorResource(id = R.color.cafe_5)
@@ -229,7 +230,7 @@ fun ProductosYSurtidoresView(
                         ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Agregar")
+                            Text(text = stringResource(id = R.string.action_add))
                         }
                     }
 

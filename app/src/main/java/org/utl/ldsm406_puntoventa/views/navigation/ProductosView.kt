@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -66,13 +67,13 @@ fun ProductosView(productoViewModel: ProductoViewModel = viewModel()) {
                 }
                 Column {
                     Text(
-                        text = "Productos",
+                        text = stringResource(R.string.products_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.cafe_5)
                     )
                     Text(
-                        text = "${productos.size} artículos registrados",
+                        text = stringResource(id = R.string.products_registered_count, productos.size),
                         style = MaterialTheme.typography.bodySmall,
                         color = colorResource(id = R.color.cafe_4)
                     )
