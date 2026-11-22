@@ -232,7 +232,7 @@ fun RegisterFormView(
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Text(text = "Registrar", fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(id = R.string.nav_register), fontWeight = FontWeight.Bold)
                 }
 
                 OutlinedButton(
@@ -245,7 +245,7 @@ fun RegisterFormView(
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Text(text = "Cancelar", fontWeight = FontWeight.SemiBold)
+                    Text(text = stringResource(id = R.string.action_cancel), fontWeight = FontWeight.SemiBold)
                 }
             }
         }
