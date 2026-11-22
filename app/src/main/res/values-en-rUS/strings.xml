@@ -51,4 +51,41 @@
     <string name="error_invalid_credentials">Incorrect username or password</string>
     <string name="action_sign_in">Sign In</string>
     <string name="action_create_account">Create new account</string>
+
+    <string name="supplier_form_new_title">New Supplier</string>
+    <string name="supplier_form_edit_title">Edit Supplier</string>
+    <string name="supplier_form_subtitle">Complete the supplier details</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="field_name">Name</string>
+    <string name="field_description">Description</string>
+    <string name="field_location">Location</string>
+    <string name="field_phone">Phone Number</string>
+    <string name="field_category">Category</string>
+    <string name="action_save">Save</string>
+    <string name="action_update">Update</string>
+    <string name="error_supplier_name_required">Enter the supplier name</string>
+    <string name="error_supplier_description_required">Enter the supplier description</string>
+    <string name="error_supplier_location_required">Enter the supplier location</string>
+    <string name="error_supplier_phone_required">Enter the phone number</string>
+    <string name="error_supplier_category_required">Enter the supplier category</string>
+
+    <string name="product_form_new_title">New Product</string>
+    <string name="product_form_edit_title">Edit Product</string>
+    <string name="product_form_subtitle">Complete the item details</string>
+    <string name="field_price">Price</string>
+    <string name="field_stock">Stock</string>
+    <string name="error_product_name_required">Enter the product name</string>
+    <string name="error_product_description_required">Enter the description</string>
+    <string name="error_product_price_invalid">Enter a valid price</string>
+    <string name="error_product_stock_invalid">Enter a valid stock</string>
+    <string name="error_product_category_required">Enter the category</string>
+
+    <string name="register_user_title">New User Registration</string>
+    <string name="field_full_name">Full name</string>
+    <string name="field_confirm_password">Confirm password</string>
+    <string name="error_full_name_required">Enter your full name</string>
+    <string name="error_username_required">Enter a username</string>
+    <string name="error_password_required">Enter your password</string>
+    <string name="error_confirm_password_required">Confirm your password</string>
+    <string name="error_passwords_mismatch">Passwords must match</string>
 </resources>

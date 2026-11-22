@@ -50,4 +50,41 @@
     <string name="error_invalid_credentials">Usuario o contraseña incorrectos</string>
     <string name="action_sign_in">Ingresar</string>
     <string name="action_create_account">Crear cuenta nueva</string>
+
+    <string name="supplier_form_new_title">Nuevo Surtidor</string>
+    <string name="supplier_form_edit_title">Editar Surtidor</string>
+    <string name="supplier_form_subtitle">Completa los datos del proveedor</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="field_name">Nombre</string>
+    <string name="field_description">Descripción</string>
+    <string name="field_location">Ubicación</string>
+    <string name="field_phone">Número Telefónico</string>
+    <string name="field_category">Categoría</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_update">Actualizar</string>
+    <string name="error_supplier_name_required">Captura el nombre del surtidor</string>
+    <string name="error_supplier_description_required">Captura la descripción del surtidor</string>
+    <string name="error_supplier_location_required">Captura la ubicación del surtidor</string>
+    <string name="error_supplier_phone_required">Captura el número telefónico</string>
+    <string name="error_supplier_category_required">Captura la categoría del surtidor</string>
+
+    <string name="product_form_new_title">Nuevo Producto</string>
+    <string name="product_form_edit_title">Editar Producto</string>
+    <string name="product_form_subtitle">Completa los datos del artículo</string>
+    <string name="field_price">Precio</string>
+    <string name="field_stock">Existencia</string>
+    <string name="error_product_name_required">Captura el nombre del producto</string>
+    <string name="error_product_description_required">Captura la descripción</string>
+    <string name="error_product_price_invalid">Captura un precio válido</string>
+    <string name="error_product_stock_invalid">Captura la existencia válida</string>
+    <string name="error_product_category_required">Captura la categoría</string>
+
+    <string name="register_user_title">Registro de Nuevo Usuario</string>
+    <string name="field_full_name">Nombre completo</string>
+    <string name="field_confirm_password">Confirma la contraseña</string>
+    <string name="error_full_name_required">Ingresa tu nombre completo</string>
+    <string name="error_username_required">Ingresa un nombre de usuario</string>
+    <string name="error_password_required">Introduce tu contraseña</string>
+    <string name="error_confirm_password_required">Confirma tu contraseña</string>
+    <string name="error_passwords_mismatch">Las contraseñas tienen que ser las mismas</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.utl.ldsm406_puntoventa.R
@@ -30,7 +31,7 @@ fun ProductoFormView(
     var precio by rememberSaveable(productoEditar) { mutableStateOf(productoEditar?.precio?.toString() ?: "") }
     var existencia by rememberSaveable(productoEditar) { mutableStateOf(productoEditar?.existencia?.toString() ?: "") }
     var categoria by rememberSaveable(productoEditar) { mutableStateOf(productoEditar?.categoria ?: "") }
-    var error by rememberSaveable { mutableStateOf("") }
+    var errorResId by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Column(
         modifier = Modifier
@@ -64,13 +65,19 @@ fun ProductoFormView(
                 }
                 Column {
                     Text(
-                        text = if (productoEditar == null) "Nuevo Producto" else "Editar Producto",
+                        text = stringResource(
+                            id = if (productoEditar == null) {
+                                R.string.product_form_new_title
+                            } else {
+                                R.string.product_form_edit_title
+                            },
+                        ),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.cafe_5)
                     )
                     Text(
-                        text = "Completa los datos del artículo",
+                        text = stringResource(id = R.string.product_form_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = colorResource(id = R.color.cafe_4)
                     )
@@ -85,7 +92,7 @@ fun ProductoFormView(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Cancelar",
+                    contentDescription = stringResource(id = R.string.action_cancel),
                     tint = colorResource(id = R.color.cafe_5)
                 )
             }
@@ -96,7 +103,7 @@ fun ProductoFormView(
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
-            label = { Text("Nombre") },
+            label = { Text(stringResource(id = R.string.field_name)) },
             singleLine = true,
             leadingIcon = { Icon(Icons.Default.ShoppingBag, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -112,7 +119,7 @@ fun ProductoFormView(
         OutlinedTextField(
             value = descripcion,
             onValueChange = { descripcion = it },
-            label = { Text("Descripción") },
+            label = { Text(stringResource(id = R.string.field_description)) },
             leadingIcon = { Icon(Icons.Default.Description, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
@@ -127,7 +134,7 @@ fun ProductoFormView(
         OutlinedTextField(
             value = precio,
             onValueChange = { precio = it },
-            label = { Text("Precio") },
+            label = { Text(stringResource(id = R.string.field_price)) },
             singleLine = true,
             leadingIcon = { Icon(Icons.Default.LocalOffer, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -143,7 +150,7 @@ fun ProductoFormView(
         OutlinedTextField(
             value = existencia,
             onValueChange = { existencia = it },
-            label = { Text("Existencia") },
+            label = { Text(stringResource(id = R.string.field_stock)) },
             singleLine = true,
             leadingIcon = { Icon(Icons.Default.ProductionQuantityLimits, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -159,7 +166,7 @@ fun ProductoFormView(
         OutlinedTextField(
             value = categoria,
             onValueChange = { categoria = it },
-            label = { Text("Categoría") },
+            label = { Text(stringResource(id = R.string.field_category)) },
             singleLine = true,
             leadingIcon = { Icon(Icons.Default.Category, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -172,8 +179,12 @@ fun ProductoFormView(
             )
         )
 
-        if (error.isNotBlank()){
-            Text(text = error, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold)
+        errorResId?.let { resId ->
+            Text(
+                text = stringResource(id = resId),
+                color = MaterialTheme.colorScheme.error,
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -204,15 +215,16 @@ fun ProductoFormView(
                 onClick = {
                     val precioDouble = precio.toDoubleOrNull()
                     val existenciaInt = existencia.toIntOrNull()
-                    error = when {
-                        nombre.isBlank() -> "Captura el nombre del producto"
-                        descripcion.isBlank() -> "Captura la descripción"
-                        precioDouble == null -> "Captura un precio válido"
-                        existenciaInt == null -> "Captura la existencia válida"
-                        categoria.isBlank() -> "Captura la categoría"
-                        else -> ""
+                    val validationError = when {
+                        nombre.isBlank() -> R.string.error_product_name_required
+                        descripcion.isBlank() -> R.string.error_product_description_required
+                        precioDouble == null -> R.string.error_product_price_invalid
+                        existenciaInt == null -> R.string.error_product_stock_invalid
+                        categoria.isBlank() -> R.string.error_product_category_required
+                        else -> null
                     }
-                    if (error.isBlank()){
+                    errorResId = validationError
+                    if (validationError == null) {
                         onGuardar(
                             Producto(
                                 id = productoEditar?.id ?: 0,
@@ -234,7 +246,13 @@ fun ProductoFormView(
                     .weight(1f)
                     .height(48.dp)
             ) {
-                Text(if (productoEditar == null) "Guardar" else "Actualizar", fontWeight = FontWeight.Bold)
+                Text(text = stringResource(
+                    id = if (productoEditar == null) {
+                        R.string.action_save
+                    } else {
+                        R.string.action_update
+                    }
+                ), fontWeight = FontWeight.Bold)
             }
         }
     }

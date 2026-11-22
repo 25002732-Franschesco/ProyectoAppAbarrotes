@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun RegisterFormView(
     var usuario by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordDos by rememberSaveable { mutableStateOf("") }
-    var error by rememberSaveable { mutableStateOf("") }
+    var errorResId by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Column(
         modifier = Modifier
@@ -70,7 +71,7 @@ fun RegisterFormView(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Registro de Nuevo Usuario",
+            text = stringResource(id = R.string.register_user_title),
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             color = colorResource(R.color.crema_fondo),
@@ -94,7 +95,7 @@ fun RegisterFormView(
                 OutlinedTextField(
                     value = nombre,
                     onValueChange = { nombre = it },
-                    label = { Text("Nombre completo") },
+                    label = { Text(stringResource(id = R.string.field_full_name)) },
                     singleLine = true,
                     leadingIcon = {
                         Icon(
@@ -118,7 +119,7 @@ fun RegisterFormView(
                 OutlinedTextField(
                     value = usuario,
                     onValueChange = { usuario = it },
-                    label = { Text("Nombre de usuario") },
+                    label = { Text(stringResource(id = R.string.field_username)) },
                     singleLine = true,
                     leadingIcon = {
                         Icon(
@@ -142,7 +143,7 @@ fun RegisterFormView(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Contraseña") },
+                    label = { Text(stringResource(id = R.string.field_password)) },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     leadingIcon = {
@@ -167,7 +168,7 @@ fun RegisterFormView(
                 OutlinedTextField(
                     value = passwordDos,
                     onValueChange = { passwordDos = it },
-                    label = { Text("Confirma la contraseña") },
+                    label = { Text(stringResource(id = R.string.field_confirm_password)) },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     leadingIcon = {
@@ -189,9 +190,9 @@ fun RegisterFormView(
                     )
                 )
 
-                if (error.isNotBlank()) {
+                errorResId?.let { resId ->
                     Text(
-                        text = error,
+                        text = stringResource(id = resId),
                         color = MaterialTheme.colorScheme.error,
                         fontWeight = FontWeight.Bold,
                         fontSize = 13.sp
@@ -202,26 +203,24 @@ fun RegisterFormView(
 
                 Button(
                     onClick = {
-                        error = when {
-                            nombre.isBlank() -> "Ingresa tu nombre completo"
-                            usuario.isBlank() -> "Ingresa un nombre de usuario"
-                            password.isBlank() -> "Introduce tu contraseña"
-                            passwordDos.isBlank() -> "Confirma tu contraseña"
-                            else -> ""
+                        val validationError = when {
+                            nombre.isBlank() -> R.string.error_full_name_required
+                            usuario.isBlank() -> R.string.error_username_required
+                            password.isBlank() -> R.string.error_password_required
+                            passwordDos.isBlank() -> R.string.error_confirm_password_required
+                            password.trim() != passwordDos.trim() -> R.string.error_passwords_mismatch
+                            else -> null
                         }
-                        if (error.isBlank()) {
-                            if (password.trim() == passwordDos.trim()) {
-                                onGuardar(
-                                    Usuario(
-                                        id = 0,
-                                        nombre = nombre.trim(),
-                                        usuario = usuario.trim(),
-                                        password = password.trim()
-                                    )
+                        errorResId = validationError
+                        if (validationError == null) {
+                            onGuardar(
+                                Usuario(
+                                    id = 0,
+                                    nombre = nombre.trim(),
+                                    usuario = usuario.trim(),
+                                    password = password.trim()
                                 )
-                            } else {
-                                error = "Las contraseñas tienen que ser las mismas"
-                            }
+                            )
                         }
                     },
                     colors = ButtonDefaults.buttonColors(

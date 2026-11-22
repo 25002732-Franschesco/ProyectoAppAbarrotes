@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.utl.ldsm406_puntoventa.R
@@ -30,7 +31,7 @@ fun SurtidorFormView(
     var ubicacion by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.ubicacion ?: "") }
     var numerotelefonico by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.numerotelefonico ?: "") }
     var categoria by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.categoria ?: "") }
-    var error by rememberSaveable { mutableStateOf("") }
+    var errorResId by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Column(
         modifier = Modifier
@@ -64,13 +65,19 @@ fun SurtidorFormView(
                 }
                 Column {
                     Text(
-                        text = if (surtidorEditar == null) "Nuevo Surtidor" else "Editar Surtidor",
+                        text = stringResource(
+                            id = if (surtidorEditar == null) {
+                                R.string.supplier_form_new_title
+                            } else {
+                                R.string.supplier_form_edit_title
+                            }
+                        ),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.cafe_5)
                     )
                     Text(
-                        text = "Completa los datos del proveedor",
+                        text = stringResource(id = R.string.supplier_form_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = colorResource(id = R.color.cafe_4)
                     )
@@ -85,7 +92,7 @@ fun SurtidorFormView(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Cancelar",
+                    contentDescription = stringResource(id = R.string.action_cancel),
                     tint = colorResource(id = R.color.cafe_5)
                 )
             }
@@ -96,7 +103,7 @@ fun SurtidorFormView(
         OutlinedTextField(
             value = nombre,
             onValueChange = { nombre = it },
-            label = { Text("Nombre") },
+            label = { Text(stringResource(id = R.string.field_name)) },
             singleLine = true,
             leadingIcon = { Icon(imageVector = Icons.Default.Business, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -112,7 +119,7 @@ fun SurtidorFormView(
         OutlinedTextField(
             value = descripcion,
             onValueChange = { descripcion = it },
-            label = { Text("Descripción") },
+            label = { Text(stringResource(id = R.string.field_description)) },
             leadingIcon = { Icon(imageVector = Icons.Default.Description, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
@@ -127,7 +134,7 @@ fun SurtidorFormView(
         OutlinedTextField(
             value = ubicacion,
             onValueChange = { ubicacion = it },
-            label = { Text("Ubicación") },
+            label = { Text(stringResource(id = R.string.field_location)) },
             singleLine = true,
             leadingIcon = { Icon(imageVector = Icons.Default.LocationOn, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -143,7 +150,7 @@ fun SurtidorFormView(
         OutlinedTextField(
             value = numerotelefonico,
             onValueChange = { numerotelefonico = it },
-            label = { Text("Número Telefónico") },
+            label = { Text(stringResource(id = R.string.field_phone)) },
             singleLine = true,
             leadingIcon = { Icon(imageVector = Icons.Default.Phone, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -159,7 +166,7 @@ fun SurtidorFormView(
         OutlinedTextField(
             value = categoria,
             onValueChange = { categoria = it },
-            label = { Text("Categoría") },
+            label = { Text(stringResource(id = R.string.field_category)) },
             singleLine = true,
             leadingIcon = { Icon(imageVector = Icons.Default.Category, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
@@ -172,8 +179,12 @@ fun SurtidorFormView(
             )
         )
 
-        if (error.isNotBlank()){
-            Text(text = error, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold)
+        errorResId?.let { resId ->
+            Text(
+                text = stringResource(id = resId),
+                color = MaterialTheme.colorScheme.error,
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -196,21 +207,22 @@ fun SurtidorFormView(
                 ) {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Eliminar")
+                    Text(text = stringResource(id = R.string.action_delete))
                 }
             }
 
             Button(
                 onClick = {
-                    error = when {
-                        nombre.isBlank() -> "Captura el nombre del surtidor"
-                        descripcion.isBlank() -> "Captura la descripción del surtidor"
-                        ubicacion.isBlank() -> "Captura la ubicación del surtidor"
-                        numerotelefonico.isBlank() -> "Captura el número telefónico"
-                        categoria.isBlank() -> "Captura la categoría del surtidor"
-                        else -> ""
+                    val validationError = when {
+                        nombre.isBlank() -> R.string.error_supplier_name_required
+                        descripcion.isBlank() -> R.string.error_supplier_description_required
+                        ubicacion.isBlank() -> R.string.error_supplier_location_required
+                        numerotelefonico.isBlank() -> R.string.error_supplier_phone_required
+                        categoria.isBlank() -> R.string.error_supplier_category_required
+                        else -> null
                     }
-                    if (error.isBlank()){
+                    errorResId = validationError
+                    if (validationError == null) {
                         onGuardar(
                             Surtidor(
                                 id = surtidorEditar?.id ?: 0,
@@ -232,7 +244,13 @@ fun SurtidorFormView(
                     .weight(1f)
                     .height(48.dp)
             ) {
-                Text(if (surtidorEditar == null) "Guardar" else "Actualizar", fontWeight = FontWeight.Bold)
+                Text(text = stringResource(
+                    id = if (surtidorEditar == null) {
+                        R.string.action_save
+                    } else {
+                        R.string.action_update
+                    }
+                ), fontWeight = FontWeight.Bold)
             }
         }
     }
