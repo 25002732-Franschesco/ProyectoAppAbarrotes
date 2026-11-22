@@ -207,7 +207,7 @@ fun ProductoFormView(
                 ) {
                     Icon(imageVector = Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Eliminar")
+                    Text(text = stringResource(id = R.string.action_delete))
                 }
             }
 
