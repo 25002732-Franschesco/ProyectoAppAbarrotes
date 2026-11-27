@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.utl.ldsm406_puntoventa.R
@@ -44,6 +46,30 @@ private val categoriasDisponibles = listOf(
     CategoriaOpcion("Mascotas", Icons.Default.Pets),
     CategoriaOpcion("Varios", Icons.Default.Category)
 )
+
+private val montosRapidos = listOf(5.0, 10.0, 15.0, 20.0, 25.0, 50.0)
+
+private fun filtrarPrecioDecimal(input: String): String {
+    val limpio = input.replace(',', '.')
+    val sb = StringBuilder()
+    var puntoUsado = false
+    for (c in limpio) {
+        when {
+            c.isDigit() -> sb.append(c)
+            c == '.' && !puntoUsado -> {
+                sb.append(c)
+                puntoUsado = true
+            }
+        }
+    }
+    val resultado = sb.toString()
+    val partes = resultado.split('.')
+    return if (partes.size == 2 && partes[1].length > 2) {
+        "${partes[0]}.${partes[1].take(2)}"
+    } else {
+        resultado
+    }
+}
 
 @Composable
 fun ProductoFormView(
@@ -157,27 +183,64 @@ fun ProductoFormView(
             )
         )
 
-        OutlinedTextField(
-            value = precio,
-            onValueChange = { precio = it },
-            label = { Text(stringResource(id = R.string.field_price)) },
-            singleLine = true,
-            leadingIcon = { Icon(Icons.Default.LocalOffer, null, tint = colorResource(R.color.naranja_4)) },
-            shape = RoundedCornerShape(12.dp),
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = colorResource(R.color.naranja_4),
-                unfocusedBorderColor = colorResource(R.color.crema_3),
-                focusedLabelColor = colorResource(R.color.naranja_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4)
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            OutlinedTextField(
+                value = precio,
+                onValueChange = { precio = filtrarPrecioDecimal(it) },
+                label = { Text(stringResource(id = R.string.field_price)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                leadingIcon = { Icon(Icons.Default.LocalOffer, null, tint = colorResource(R.color.naranja_4)) },
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = colorResource(R.color.naranja_4),
+                    unfocusedBorderColor = colorResource(R.color.crema_3),
+                    focusedLabelColor = colorResource(R.color.naranja_4),
+                    unfocusedLabelColor = colorResource(R.color.cafe_4)
+                )
             )
-        )
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(vertical = 2.dp)
+            ) {
+                items(montosRapidos) { monto ->
+                    Surface(
+                        onClick = {
+                            val actual = precio.toDoubleOrNull() ?: 0.0
+                            val suma = actual + monto
+                            precio = if (suma % 1.0 == 0.0) {
+                                suma.toInt().toString()
+                            } else {
+                                "%.2f".format(suma)
+                            }
+                        },
+                        shape = RoundedCornerShape(10.dp),
+                        color = colorResource(id = R.color.crema_fondo),
+                        border = BorderStroke(1.dp, colorResource(id = R.color.crema_3))
+                    ) {
+                        Text(
+                            text = "+$${monto.toInt()}",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.naranja_4),
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                        )
+                    }
+                }
+            }
+        }
 
         OutlinedTextField(
             value = existencia,
-            onValueChange = { existencia = it },
+            onValueChange = { existencia = it.filter { c -> c.isDigit() } },
             label = { Text(stringResource(id = R.string.field_stock)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             leadingIcon = { Icon(Icons.Default.ProductionQuantityLimits, null, tint = colorResource(R.color.naranja_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),

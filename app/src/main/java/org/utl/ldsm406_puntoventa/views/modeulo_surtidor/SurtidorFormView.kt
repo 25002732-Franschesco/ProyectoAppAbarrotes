@@ -1,9 +1,13 @@
 package org.utl.ldsm406_puntoventa.views.modeulo_surtidor
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -12,12 +16,36 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.utl.ldsm406_puntoventa.R
 import org.utl.ldsm406_puntoventa.data.surtidor.Surtidor
+
+private data class CategoriaSurtidorOpcion(
+    val nombre: String,
+    val icono: ImageVector
+)
+
+private val categoriasSurtidores = listOf(
+    CategoriaSurtidorOpcion("Refrescos y Bebidas", Icons.Default.LocalDrink),
+    CategoriaSurtidorOpcion("Botanas y Frituras", Icons.Default.Cookie),
+    CategoriaSurtidorOpcion("Lácteos y Refrigerados", Icons.Default.EggAlt),
+    CategoriaSurtidorOpcion("Abarrotes al Mayoreo", Icons.Default.Inventory2),
+    CategoriaSurtidorOpcion("Pan y Tortillería", Icons.Default.BakeryDining),
+    CategoriaSurtidorOpcion("Carnicería y Embutidos", Icons.Default.SetMeal),
+    CategoriaSurtidorOpcion("Frutas y Verduras", Icons.Default.Eco),
+    CategoriaSurtidorOpcion("Limpieza y Químicos", Icons.Default.CleaningServices),
+    CategoriaSurtidorOpcion("Higiene y Farmacia", Icons.Default.MedicalServices),
+    CategoriaSurtidorOpcion("Hielo y Congelados", Icons.Default.AcUnit),
+    CategoriaSurtidorOpcion("Alimento para Mascotas", Icons.Default.Pets),
+    CategoriaSurtidorOpcion("Distribuidor General", Icons.Default.LocalShipping)
+)
 
 @Composable
 fun SurtidorFormView(
@@ -29,7 +57,9 @@ fun SurtidorFormView(
     var nombre by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.nombre ?: "") }
     var descripcion by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.descripcion ?: "") }
     var ubicacion by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.ubicacion ?: "") }
-    var numerotelefonico by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.numerotelefonico ?: "") }
+    var numerotelefonico by rememberSaveable(surtidorEditar) {
+        mutableStateOf(surtidorEditar?.numerotelefonico?.filter { it.isDigit() }?.take(10) ?: "")
+    }
     var categoria by rememberSaveable(surtidorEditar) { mutableStateOf(surtidorEditar?.categoria ?: "") }
     var errorResId by rememberSaveable { mutableStateOf<Int?>(null) }
 
@@ -149,9 +179,12 @@ fun SurtidorFormView(
 
         OutlinedTextField(
             value = numerotelefonico,
-            onValueChange = { numerotelefonico = it },
+            onValueChange = { nuevo ->
+                numerotelefonico = nuevo.filter { it.isDigit() }.take(10)
+            },
             label = { Text(stringResource(id = R.string.field_phone)) },
             singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             leadingIcon = { Icon(imageVector = Icons.Default.Phone, contentDescription = null, tint = colorResource(R.color.verde_4)) },
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.fillMaxWidth(),
@@ -163,21 +196,67 @@ fun SurtidorFormView(
             )
         )
 
-        OutlinedTextField(
-            value = categoria,
-            onValueChange = { categoria = it },
-            label = { Text(stringResource(id = R.string.field_category)) },
-            singleLine = true,
-            leadingIcon = { Icon(imageVector = Icons.Default.Category, contentDescription = null, tint = colorResource(R.color.verde_4)) },
-            shape = RoundedCornerShape(12.dp),
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = colorResource(R.color.verde_4),
-                unfocusedBorderColor = colorResource(R.color.crema_3),
-                focusedLabelColor = colorResource(R.color.verde_4),
-                unfocusedLabelColor = colorResource(R.color.cafe_4)
-            )
-        )
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Category,
+                    contentDescription = null,
+                    tint = colorResource(R.color.verde_4),
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.field_category),
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.cafe_5)
+                )
+            }
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(vertical = 2.dp)
+            ) {
+                items(categoriasSurtidores, key = { it.nombre }) { item ->
+                    val seleccionada = categoria.equals(item.nombre, ignoreCase = true)
+                    val verde = colorResource(R.color.verde_4)
+
+                    Surface(
+                        onClick = { categoria = item.nombre },
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (seleccionada) verde else colorResource(R.color.crema_fondo),
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = if (seleccionada) verde else colorResource(R.color.crema_3)
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                imageVector = item.icono,
+                                contentDescription = item.nombre,
+                                tint = if (seleccionada) Color.White else verde,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                text = item.nombre,
+                                fontSize = 13.sp,
+                                fontWeight = if (seleccionada) FontWeight.Bold else FontWeight.Medium,
+                                color = if (seleccionada) Color.White else colorResource(R.color.cafe_5)
+                            )
+                        }
+                    }
+                }
+            }
+        }
 
         errorResId?.let { resId ->
             Text(
